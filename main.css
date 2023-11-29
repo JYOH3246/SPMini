@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Noto+Sans+KR&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Noto+Sans+KR&display=swap');
+.lilita-one {
+    font-family: 'Lilita One', serif;
+    font-size: 48px;
+}
+.dongle {
+    font-family: 'Dongle', serif;
+    font-size: 36px;
+}
+
 #developblog {
     margin: 0 auto;
 }
