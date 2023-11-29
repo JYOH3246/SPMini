@@ -38,7 +38,7 @@
     height: 100px;
 }
 
-.postbox {
+#postbox {
     background-color: aqua;
     width: 500px;
     margin: 30px auto 30px auto;
@@ -72,4 +72,9 @@
 #empty_div {
     display: flex;
     justify-content: center;
+}
+
+#behind_div>button {
+    display: flex;
+    margin: 0px auto 0px auto;
 }

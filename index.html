@@ -11,6 +11,13 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
+<script type="module">
+    $(document).ready(function () {
+        $("#writeReview").click(async function () {
+            $('#postbox').toggle();
+        });
+    });
+</script>
 
 <body>
     <div class="modal modalBackground" id="mateView" tabindex="-1">
@@ -211,7 +218,8 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img class = "cd_view_img" src="img/Ken.png" width="100%" height="225" style="border-radius: 5px 5px 0px 0px" />
+                        <img class="cd_view_img" src="img/Ken.png" width="100%" height="225"
+                            style="border-radius: 5px 5px 0px 0px" />
                         <div class="card-body">
                             <p class="cd_view_comment card-text">
                                 This is a wider card with supporting text below as a natural lead-in to additional
@@ -239,7 +247,8 @@
                             <rect width="100%" height="100%" fill="#55595c"></rect>
                             <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                         </svg> -->
-                        <img class = "cd_view_img" src="img/Ken.png" width="100%" height="225" style="border-radius: 5px 5px 0px 0px" />
+                        <img class="cd_view_img" src="img/Ken.png" width="100%" height="225"
+                            style="border-radius: 5px 5px 0px 0px" />
                         <div class="card-body">
                             <p class="cd_view_comment card-text">
                                 This is a wider card with supporting text below as a natural lead-in to additional
@@ -266,7 +275,8 @@
                             <rect width="100%" height="100%" fill="#55595c"></rect>
                             <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                         </svg> -->
-                        <img class = "cd_view_img" src="img/Ken.png" width="100%" height="225" style="border-radius: 5px 5px 0px 0px" />
+                        <img class="cd_view_img" src="img/Ken.png" width="100%" height="225"
+                            style="border-radius: 5px 5px 0px 0px" />
                         <div class="card-body">
                             <p class="cd_view_comment card-text">
                                 This is a wider card with supporting text below as a natural lead-in to additional
@@ -288,10 +298,32 @@
         </div>
     </div>
     <div class="none" id="behind_div">
+        <button id="writeReview" type="button" class="btn btn-secondary btn-lg">후기작성</button>
+        <div id="postbox">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="image" placeholder="이미지" />
+                <label id="image" for="floatingInput">이미지 주소</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="title" placeholder="제목" />
+                <label id="title" for="floatingInput">제목</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="date" placeholder="날짜" />
+                <label id="date" for="floatingInput">날짜</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="comment" placeholder="내용" />
+                <label id="comment" for="floatingInput">내용</label>
+            </div>
+            <div>
+                <button id="behindtext">일지 작성하기</button>
+            </div>
+        </div>
         <div id="behind_txt">
             <!--후기글 영역과 포스팅 박스 영역을 나눔-->
             <div style="margin: 50px 0px 50px 0px">
-                <h3 style="text-align: center">개발 후기</h3>
+
             </div>
             <div class="col-md-6" id="developblog">
                 <div
@@ -315,27 +347,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="postbox">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="image" placeholder="이미지" />
-                <label id="image" for="floatingInput">이미지 주소</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="title" placeholder="제목" />
-                <label id="title" for="floatingInput">제목</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="date" placeholder="날짜" />
-                <label id="date" for="floatingInput">날짜</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="comment" placeholder="내용" />
-                <label id="comment" for="floatingInput">내용</label>
-            </div>
-            <div>
-                <button id="behindtext">일지 작성하기</button>
             </div>
         </div>
     </div>
@@ -419,15 +430,15 @@
         //페이지 로드 시 팀원, 개발 후기 카드 불러오기
         let docs = await getDocs(collection(db, "Teammates"));
         let i_row = docs.docs;
-        $('.cd_view_img').each(function(index){
+        $('.cd_view_img').each(function (index) {
             $(this).attr('src', i_row[index].data().img);
         });
-        $('.cd_view_comment').each(function(index){
-            $(this).text("["+i_row[index].data().name+"]"+ i_row[index].data().comment);
+        $('.cd_view_comment').each(function (index) {
+            $(this).text("[" + i_row[index].data().name + "]" + i_row[index].data().comment);
         });
-        
 
-                
+
+
 
         // 개별 팀원 정보 가져오기 GET 방식
         async function getTeammateById(mateId) {
