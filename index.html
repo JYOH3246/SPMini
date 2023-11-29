@@ -296,7 +296,7 @@
     </div>
     <div class="none" id="behind_div">
         <button id="writeReview" type="button" class="btn btn-secondary btn-lg">후기작성</button>
-        <div id="postbox">
+        <div id="postbox" class="none">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="image" placeholder="이미지" />
                 <label id="image" for="floatingInput">이미지 주소</label>
@@ -585,18 +585,10 @@
         });
     </script>
     <script id="ojy_script">
-        //팀원소개 -> 보기 클릭 시 나오는 modal창 키고 끄기
-        // $('.viewmodal').on('click', function () {
-        //     $('#mateView').addClass('d-block');
-        // });
         $('.btn-close').on('click', function () {
             $('#mateView').removeClass('d-block');
         });
 
-        // //팀원소개 -> 수정 클릭 시 나오는 modal창 키고 끄기
-        // $('.modifymodal').on('click', function () {
-        //     $('#mateModify').addClass('d-block');
-        // });
 
         $('.btn-close,#modifyModalClose').on('click', function () {
             $('#mateModify').removeClass('d-block');
@@ -608,17 +600,11 @@
         $('.btn-close').on('click', function () {
             $('#behindModify').removeClass('d-block');
         });
-        /*
-        let mateImage = $('#mateImage ').val();
-        let mateName = $('#mateName').val();
-        let mateAge = $('#mateAge').val();
-        let mateMBTI = $('#mateMBTI').val();
-        let mateAddress = $('#mateAddress ').val();
-        let mateGoods = $('#mateGoods').val();
-        let mateWork= $('#mateWork').val();
-        let mateBlog = $('#mateBlog').val();
-        let mateSelfIntro= $('#mateSelfIntro').val();
-        */
+        // 버튼을 1번 클릭하면 숨겨진 포스팅박스가 나오고 , 다시 클릭하면 숨겨짐
+        $('#writeReview'). on ('click',function () {
+            $('#postbox').toggleClass('none');
+        })
+
     </script>
 </body>
 
