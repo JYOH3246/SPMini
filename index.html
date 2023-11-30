@@ -233,7 +233,7 @@
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <div class="col">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm" style="height: 360px">
                             <img class="cd_view_img" src="img/Ken.png" width="100%" height="225" style="border-radius: 5px 5px 0px 0px" />
                             <div class="card-body">
                                 <p class="cd_view_comment card-text">
@@ -251,7 +251,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm" style="height: 360px">
                             <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                             preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -275,7 +275,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm" style="height: 360px">
                             <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                             preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -568,11 +568,11 @@
                     console.log(i, title);
                     //방명록 상자 색상 transparent -> white로 변경
                     let temp_html = ` <div class="col-md-6" id="developblog">
-                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative ">
                                             <div class="col-auto d-none d-lg-block">
                                                 <img src = "${image}" width = "200" height = "250">
                                             </div>
-                                            <div class="col p-4 d-flex flex-column position-static" style = "backgronund-color = white;">
+                                            <div class="col p-4 d-flex flex-column position-static whiteback" >
                                                 <h3 class="mb-0">${title}</h3>
                                                 <div class="mb-1 text-body-secondary">${date}</div>
                                                 <p class="card-text mb-auto">${comment}</p>
