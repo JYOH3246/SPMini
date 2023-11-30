@@ -309,13 +309,28 @@
                 <button id="behindtext">일지 작성하기</button>
             </div>
         </div>
-        <div id="behind_txt">
-            <!--후기글 영역과 포스팅 박스 영역을 나눔-->
-            <div style="margin: 50px 0px 50px 0px">
-
-            </div>
-            <!--
+        <div id="behind_cards">        
+            <div style="margin: 50px 0px 50px 0px"> 
+            </div>  
+            <!-- 카드 추가 
             <div class="col-md-6" id="developblog">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-auto d-none d-lg-block">
+                        <img src = "${image}" width = "200" height = "250">
+                    </div>
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0">${title}</h3>
+                        <div class="mb-1 text-body-secondary">${date}</div>
+                        <p class="card-text mb-auto">${comment}</p>
+                        <div>
+                            <button type="button" id = "modifyBehind" class="btn btn-primary ">수정하기</button>
+                            <button type="button" id = "deleteBehind" class="btn btn-secondary">삭제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>   -->
+
+            <!-- <div class="col-md-6" id="developblog">
                 <div
                     class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col-auto d-none d-lg-block">
@@ -337,8 +352,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            -->
+            </div>  -->
     </div>
 
     <!--
@@ -419,16 +433,45 @@
 
         //페이지 로드 시 팀원, 개발 후기 카드 불러오기
         let docs = await getDocs(collection(db, "Teammates"));
-        let i_row = docs.docs;
+        let t_docs = await getDocs(collection(db, "Teammates"));
+        let t_row = t_docs.docs;
         $('.cd_view_img').each(function (index) {
-            $(this).attr('src', i_row[index].data().img);
+            $(this).attr('src', t_row[index].data().img);
         });
         $('.cd_view_comment').each(function (index) {
-            $(this).text("[" + i_row[index].data().name + "]" + i_row[index].data().comment);
+            $(this).text("[" + t_row[index].data().name + "]" + t_row[index].data().comment);
         });
 
 
+        let b_docs = await getDocs(collection(db, "Behinds"));
+        let b_rows = b_docs.docs;
+        $('#behind_txt').empty();
+        if (b_rows.length > 0) {
+            b_rows.forEach((doc) => {
+                let image = doc.data().img;
+                let title = doc.data().title;
+                let date = doc.data().date;
+                let comment = doc.data().comment;
 
+                let temp_html = ` <div class="col-md-6" id="developblog">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-auto d-none d-lg-block">
+                        <img src = "${image}" width = "200" height = "250">
+                    </div>
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0">${title}</h3>
+                        <div class="mb-1 text-body-secondary">${date}</div>
+                        <p class="card-text mb-auto">${comment}</p>
+                        <div>
+                            <button type="button" id = "modifyBehind" class="btn btn-primary ">수정하기</button>
+                            <button type="button" id = "deleteBehind" class="btn btn-secondary">삭제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+                $('#behind_txt').append(temp_html); //behind_txt 뒤에 붙여주세요
+            });
+        }
 
         // 개별 팀원 정보 가져오기 GET 방식
         async function getTeammateById(mateId) {
