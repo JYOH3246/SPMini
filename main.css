@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Noto+Sans+KR&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Noto+Sans+KR&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&display=swap');
+* {
+    font-family: 'Nanum Gothic Coding', serif;
+}
 .lilita-one {
     font-family: 'Lilita One', serif;
     font-size: 48px;
