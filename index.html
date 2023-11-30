@@ -140,25 +140,25 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="modalImage" placeholder="이미지" />
-                            <label for="floatingInput">이미지 주소</label>
+                            <input type="text" class="form-control" id="bh_edit_img" placeholder="이미지" />
+                            <label for="bh_edit_img">이미지 주소</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="modalTitle" placeholder="제목" />
-                            <label for="floatingInput">제목</label>
+                            <input type="text" class="form-control" id="bh_edit_title" placeholder="제목" />
+                            <label for="bh_edit_title">제목</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="modalDate" placeholder="날짜" />
-                            <label for="floatingInput">날짜</label>
+                            <input type="date" class="form-control" id="bh_edit_date" placeholder="날짜" />
+                            <label for="bh_edit_date">날짜</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="modalComment" placeholder="내용" />
-                            <label for="floatingInput">내용</label>
+                            <input type="text" class="form-control" id="bh_edit_comment" placeholder="내용" />
+                            <label for="bh_edit_comment">내용</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="bh_edit_save btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -467,6 +467,7 @@
                 // 각 속성 값
                 $('#md_view_age').text(mateData.age);
                 $('#md_view_blog').text(mateData.blog);
+                $('#md_view_blog').attr('href', mateData.blog);
                 $('#md_view_comment').text(mateData.comment);
                 $('#md_view_costyle').text(mateData.costyle);
                 $('#md_view_good').text(mateData.good);
@@ -607,17 +608,40 @@
                 // 업데이트 후 페이지 리로드
                 window.location.reload();
             });
+ 
 
+            // 개발 후기 > 수정하기 버튼 
             $('.bh_edit_btn').click(async function () {
-                // let cd_idx = $(this).data("docid");
-                // console.log("docid:",cd_idx);
+                // 수정하기 버튼에 들어있던 문서아이디 = data-cdid 값을 모달에 추가 attr()
+                $('#behindModify').attr('data-cdid', $(this).data("cdid"));
+                $('#behindModify').addClass('d-block');  
             });
 
+            $('.bh_edit_save').click(async function(){
+
+                // 모달 안에 있던 data-cdid 값을 가져와서 문자화
+                let doc_id = $('#behindModify').data("cdid").toString(); 
+
+                const data = {
+                    img: $('#bh_edit_img').val(),
+                    title: $('#bh_edit_title').val(),
+                    date: $('#bh_edit_date').val(),
+                    comment: $('#bh_edit_comment').val()
+                }; 
+ 
+                const docRef = await setDoc(doc(collection(db, "Behinds"), doc_id), data);
+
+                alert('일지가 작성되었습니다!');
+
+                // 업데이트 후 페이지 리로드
+                window.location.reload();
+            });
+
+
             // 지우려는 카드 인덱스 받아서 파이어베이스의 해당하는 문서 지우기. ref 통해.
-            async function delBehindCard(doc_id) {
-                console.log(typeof doc_id);
-                await deleteDoc(doc(db, 'Behinds', doc_id.toString()));
-                alert('삭제되었습니다.');
+            async function delBehindCard(doc_id) { 
+                await deleteDoc(doc(db, "Behinds", doc_id.toString()));
+                alert("삭제되었습니다.");
 
                 // 업데이트 후 페이지 리로드
                 window.location.reload();
@@ -632,6 +656,12 @@
                     await delBehindCard(doc_id);
                 }
             });
+
+
+
+
+        </script>
+        <script id="ljw_script"> 
         </script>
         <script id="ljw_script"></script>
         <script id="ojy_script">
