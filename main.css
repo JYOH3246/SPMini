@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Noto+Sans+KR&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dongle&family=Gaegu&family=Lilita+One&family=Nanum+Brush+Script&family=Noto+Sans+KR&display=swap');
+
 .lilita-one {
     font-family: 'Lilita One', serif;
     font-size: 48px;
 }
 .dongle {
     font-family: 'Dongle', serif;
-    
 }
 
 #developblog {
@@ -21,7 +21,6 @@
 .modalhead-right {
     width: 10%;
     float: left;
-
 }
 
 .mheadfooter {
@@ -31,13 +30,11 @@
 .modalbody-left {
     width: 40%;
     float: left;
-
 }
 
 .modalbody-right {
     width: 60%;
     float: left;
-
 }
 
 .mheadfooter {
@@ -77,7 +74,6 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 5;
     padding: 30px;
-
 }
 
 #empty_div {
@@ -85,7 +81,7 @@
     justify-content: center;
 }
 
-#behind_div>button {
+#behind_div > button {
     display: flex;
     margin: 0px auto 0px auto;
 }
