@@ -566,12 +566,13 @@
                     let date = doc.data().date;
                     let comment = doc.data().comment;
                     console.log(i, title);
+                    //방명록 상자 색상 transparent -> white로 변경
                     let temp_html = ` <div class="col-md-6" id="developblog">
                                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                             <div class="col-auto d-none d-lg-block">
                                                 <img src = "${image}" width = "200" height = "250">
                                             </div>
-                                            <div class="col p-4 d-flex flex-column position-static">
+                                            <div class="col p-4 d-flex flex-column position-static" style = "backgronund-color = white;">
                                                 <h3 class="mb-0">${title}</h3>
                                                 <div class="mb-1 text-body-secondary">${date}</div>
                                                 <p class="card-text mb-auto">${comment}</p>
@@ -608,28 +609,26 @@
                 // 업데이트 후 페이지 리로드
                 window.location.reload();
             });
- 
 
-            // 개발 후기 > 수정하기 버튼 
+            // 개발 후기 > 수정하기 버튼
             $('.bh_edit_btn').click(async function () {
                 // 수정하기 버튼에 들어있던 문서아이디 = data-cdid 값을 모달에 추가 attr()
-                $('#behindModify').attr('data-cdid', $(this).data("cdid"));
-                $('#behindModify').addClass('d-block');  
+                $('#behindModify').attr('data-cdid', $(this).data('cdid'));
+                $('#behindModify').addClass('d-block');
             });
 
-            $('.bh_edit_save').click(async function(){
-
+            $('.bh_edit_save').click(async function () {
                 // 모달 안에 있던 data-cdid 값을 가져와서 문자화
-                let doc_id = $('#behindModify').data("cdid").toString(); 
+                let doc_id = $('#behindModify').data('cdid').toString();
 
                 const data = {
                     img: $('#bh_edit_img').val(),
                     title: $('#bh_edit_title').val(),
                     date: $('#bh_edit_date').val(),
-                    comment: $('#bh_edit_comment').val()
-                }; 
- 
-                const docRef = await setDoc(doc(collection(db, "Behinds"), doc_id), data);
+                    comment: $('#bh_edit_comment').val(),
+                };
+
+                const docRef = await setDoc(doc(collection(db, 'Behinds'), doc_id), data);
 
                 alert('일지가 작성되었습니다!');
 
@@ -637,11 +636,10 @@
                 window.location.reload();
             });
 
-
             // 지우려는 카드 인덱스 받아서 파이어베이스의 해당하는 문서 지우기. ref 통해.
-            async function delBehindCard(doc_id) { 
-                await deleteDoc(doc(db, "Behinds", doc_id.toString()));
-                alert("삭제되었습니다.");
+            async function delBehindCard(doc_id) {
+                await deleteDoc(doc(db, 'Behinds', doc_id.toString()));
+                alert('삭제되었습니다.');
 
                 // 업데이트 후 페이지 리로드
                 window.location.reload();
@@ -656,13 +654,8 @@
                     await delBehindCard(doc_id);
                 }
             });
-
-
-
-
         </script>
-        <script id="ljw_script"> 
-        </script>
+        <script id="ljw_script"></script>
         <script id="ljw_script"></script>
         <script id="ojy_script">
             $('.btn-close').on('click', function () {
