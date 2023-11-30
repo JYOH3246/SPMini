@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="modal modalBackground" id="mateView" tabindex="-1">
         <div class="modal-dialog">
@@ -180,7 +181,7 @@
     </div>
     <div class="px-4 py-5 my-5 text-center">
         <div>
-            <img src = "img/PERSI Logo.png">
+            <img src="img/PERSI Logo.png">
         </div>
         <div class="col-lg-6 mx-auto">
             <p class="lead mb-4">버튼을 눌러 원하는 정보를 확인해보세요.</p>
@@ -309,9 +310,9 @@
                 <button id="behindtext">일지 작성하기</button>
             </div>
         </div>
-        <div id="behind_cards">        
-            <div style="margin: 50px 0px 50px 0px"> 
-            </div>  
+        <div id="behind_cards">
+            <div style="margin: 50px 0px 50px 0px">
+            </div>
             <!-- 카드 추가 
             <div class="col-md-6" id="developblog">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -353,9 +354,9 @@
                     </div>
                 </div>
             </div>  -->
-    </div>
+        </div>
 
-    <!--
+        <!--
     <div id="modal" class="modal-overlay">
     <div class="modal-window">
         <div class="title">
@@ -371,87 +372,258 @@
     </div>
     -->
 
-    <script type="module" id="jjh_script">
-        // Firebase SDK 라이브러리 가져오기
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, getDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        <script type="module" id="jjh_script">
+            // Firebase SDK 라이브러리 가져오기
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+            import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+            import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+            import { getDocs, getDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
 
-        // Firebase 구성 정보 설정 / 프로젝트설정 > 구성
-        const firebaseConfig = {
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            // Firebase 구성 정보 설정 / 프로젝트설정 > 구성
+            const firebaseConfig = {
+                // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-            apiKey: "AIzaSyAHVG8hDqtLmf0yJcUy3NX1RLYaCZLjMqw",
-            authDomain: "sparta-ce0ab.firebaseapp.com",
-            projectId: "sparta-ce0ab",
-            storageBucket: "sparta-ce0ab.appspot.com",
-            messagingSenderId: "909906331233",
-            appId: "1:909906331233:web:a947163b5b79eceac98c20",
-            measurementId: "G-E0DZ1PR5Q0"
+                apiKey: "AIzaSyAHVG8hDqtLmf0yJcUy3NX1RLYaCZLjMqw",
+                authDomain: "sparta-ce0ab.firebaseapp.com",
+                projectId: "sparta-ce0ab",
+                storageBucket: "sparta-ce0ab.appspot.com",
+                messagingSenderId: "909906331233",
+                appId: "1:909906331233:web:a947163b5b79eceac98c20",
+                measurementId: "G-E0DZ1PR5Q0"
 
-        };
-
-
-        // Firebase 인스턴스 초기화
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+            };
 
 
-        $('#mainbtn').click(async function () {
-            //openclose() 함수 내용 가져오기
-            // toggle() : 껐다켜기. 사실 div style="display : none" 으로 전환된것
-            $('#team_div').fadeOut();
-            $('#teammate_div').fadeOut();
-            $('#behind_div').fadeOut();
-
-            $('#empty_div').fadeIn();
-        });
-        $('#teambtn').click(async function () {
-            $('#empty_div').fadeOut();
-            $('#teammate_div').fadeOut();
-            $('#behind_div').fadeOut();
-
-            $('#team_div').fadeIn();
-        });
-        $('#teammatebtn').click(async function () {
-            $('#empty_div').fadeOut();
-            $('#team_div').fadeOut();
-            $('#behind_div').fadeOut();
-
-            $('#teammate_div').fadeIn();
-        });
-        $('#behindbtn').click(async function () {
-            $('#empty_div').fadeOut();
-            $('#team_div').fadeOut();
-            $('#teammate_div').fadeOut();
-
-            $('#behind_div').fadeIn();
-        });
-
-        //페이지 로드 시 팀원, 개발 후기 카드 불러오기
-        let docs = await getDocs(collection(db, "Teammates"));
-        let t_docs = await getDocs(collection(db, "Teammates"));
-        let t_row = t_docs.docs;
-        $('.cd_view_img').each(function (index) {
-            $(this).attr('src', t_row[index].data().img);
-        });
-        $('.cd_view_comment').each(function (index) {
-            $(this).text("[" + t_row[index].data().name + "]" + t_row[index].data().comment);
-        });
+            // Firebase 인스턴스 초기화
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
 
 
-        let b_docs = await getDocs(collection(db, "Behinds"));
-        let b_rows = b_docs.docs;
-        $('#behind_txt').empty();
-        if (b_rows.length > 0) {
-            b_rows.forEach((doc) => {
-                let image = doc.data().img;
-                let title = doc.data().title;
-                let date = doc.data().date;
-                let comment = doc.data().comment;
+//  메인 페이지 관련 ----------------------------------------------------------------------------------------------------
+
+            $('#mainbtn').click(async function () {
+                //openclose() 함수 내용 가져오기
+                // toggle() : 껐다켜기. 사실 div style="display : none" 으로 전환된것
+                $('#team_div').fadeOut();
+                $('#teammate_div').fadeOut();
+                $('#behind_div').fadeOut();
+
+                $('#empty_div').fadeIn();
+            });
+            $('#teambtn').click(async function () {
+                $('#empty_div').fadeOut();
+                $('#teammate_div').fadeOut();
+                $('#behind_div').fadeOut();
+
+                $('#team_div').fadeIn();
+            });
+            $('#teammatebtn').click(async function () {
+                $('#empty_div').fadeOut();
+                $('#team_div').fadeOut();
+                $('#behind_div').fadeOut();
+
+                $('#teammate_div').fadeIn();
+            });
+            $('#behindbtn').click(async function () {
+                $('#empty_div').fadeOut();
+                $('#team_div').fadeOut();
+                $('#teammate_div').fadeOut();
+
+                $('#behind_div').fadeIn();
+            });
+
+// 팀원 소개 관련 -------------------------------------------------------------------------------------------------------
+
+            //페이지 로드 시 팀원 카드 불러오기
+            let docs = await getDocs(collection(db, "Teammates"));
+            let t_docs = await getDocs(collection(db, "Teammates"));
+            let t_row = t_docs.docs;
+            $('.cd_view_img').each(function (index) {
+                $(this).attr('src', t_row[index].data().img);
+            });
+            $('.cd_view_comment').each(function (index) {
+                $(this).text("[" + t_row[index].data().name + "]" + t_row[index].data().comment);
+            });
+
+            // 개별 팀원 정보 가져오기 GET 방식
+            async function getTeammateById(mateId) {
+                let docs = await getDocs(collection(db, "Teammates"));
+
+                let row = docs.docs[mateId];
+
+                let mateData = {
+                    age: row.get('age'),
+                    blog: row.get('blog'),
+                    comment: row.get('comment'),
+                    costyle: row.get('costyle'),
+                    good: row.get('good'),
+                    img: row.get('img'),
+                    mbti: row.get('mbti'),
+                    name: row.get('name'),
+                    residence: row.get('residence'),
+                };
+
+                return mateData;
+            }
+
+            //모달 내부 값 업데이트
+            async function updateModal(mateData) {
+                // 각 속성 값 
+                $('#md_view_age').text(mateData.age);
+                $('#md_view_blog').text(mateData.blog);
+                $('#md_view_comment').text(mateData.comment);
+                $('#md_view_costyle').text(mateData.costyle);
+                $('#md_view_good').text(mateData.good);
+                $('#md_view_img').attr('src', mateData.img);
+                $('#md_view_mbti').text(mateData.mbti);
+                $('#md_view_name').text(mateData.name);
+                $('#md_view_residence').text(mateData.residence);
+                $('#mateView #md_view_mbti').text(mateData.mbti);
+            };
+
+            // 팀원소개 > 보기 버튼 
+            // 클릭 시 모달 값 변경 
+            $('.viewmodal').click(async function () {
+                // Query에서는 데이터 속성 이름을 camelCase로 변환하므로, data('memNo')로 호출할 때는 N이 소문자로 변환되어야
+                let btnId = $(this).data('memno');
+                let mateData = await getTeammateById(btnId);
+
+                await updateModal(mateData);
+
+                $('#mateView').addClass('d-block');
+            });
+
+
+            //모달 내부 form 값 기존값으로 채우기
+            async function updateForm(mateData) {
+                // 각 속성 값   
+                $('#md_edit_age').val(mateData.age);
+                $('#md_edit_blog').val(mateData.blog);
+                $('#md_edit_comment').val(mateData.comment);
+                $('#md_edit_costyle').val(mateData.costyle);
+                $('#md_edit_good').val(mateData.good);
+                $('#md_edit_img').val(mateData.img);
+                $('#md_edit_mbti').val(mateData.mbti);
+                $('#md_edit_name').val(mateData.name);
+                $('#md_edit_residence').val(mateData.residence);
+            };
+
+
+            // 팀원소개 > 수정 버튼 
+            // 클릭 시 선택한 수정 버튼의 data-memNo 모달에 전달 id = "md_edit_memNo"
+            $('.modifymodal').click(async function () {
+                // Query에서는 데이터 속성 이름을 camelCase로 변환하므로, data('memNo')로 호출할 때는 N이 소문자로 변환되어야
+                let memNo = $(this).data('memno');
+                let mateData = await getTeammateById(memNo);
+
+                // attr : 특정 속성값을 , ~ 로 변경
+                $('#md_edit_memNo').attr('data-memno', memNo);
+
+                await updateForm(mateData);
+
+                $('#mateModify').addClass('d-block');
+
+            });
+
+            async function updateTeammate(idx) {
+                // Teammates 컬렉션의 문서를 가져온다. 
+                let docs = await getDocs(collection(db, "Teammates"));
+                // mateIdx에 해당하는 문서를 찾는다.
+                let mateDoc = docs.docs[idx];
+                // 모달 내부 form id 가져오기
+                let updateData = {
+                    'age': $('#md_edit_age').val(),
+                    'blog': $('#md_edit_blog').val(),
+                    'comment': $('#md_edit_comment').val(),
+                    'costyle': $('#md_edit_costyle').val(),
+                    'good': $('#md_edit_good').val(),
+                    'img': $('#md_edit_img').val(),
+                    'mbti': $('#md_edit_mbti').val(),
+                    'name': $('#md_edit_name').val(),
+                    'residence': $('#md_edit_residence').val(),
+                };
+
+                await updateDoc(mateDoc.ref, updateData);
+                // 업데이트 후 페이지 리로드
+                window.location.reload();
+
+                // 수정 끝났으면 관리자 선택 초기화
+                mateIdx = null;
+            };
+
+
+
+            //팀원소개 -> 수정 > SaveChanges 버튼 누르면 Firebase 값 업데이트
+            $('#modifyModalSave').click(async function () {
+                let idx = $('#md_edit_memNo').data('memno')
+                await updateTeammate(idx);
+                alert('수정이 완료되었습니다.');
+                $('#mateModify').addClass('d-block');
+            });
+
+
+// 개발 후기 관련 ------------------------------------------------------------------------------------------------------
+
+            //페이지 로드 시 후기 카드 불러오기
+            let b_docs = await getDocs(collection(db, "Behinds"));
+            let b_rows = b_docs.docs;
+            if (b_rows.length > 0) {
+                b_rows.forEach((doc, i) => {
+                    let image = doc.data().img;
+                    let title = doc.data().title;
+                    let date = doc.data().date;
+                    let comment = doc.data().comment;
+                    console.log(i, title);
+                    let temp_html = ` <div class="col-md-6" id="developblog">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col-auto d-none d-lg-block">
+                    <img src = "${image}" width = "200" height = "250">
+                </div>
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h3 class="mb-0">${title}</h3>
+                    <div class="mb-1 text-body-secondary">${date}</div>
+                    <p class="card-text mb-auto">${comment}</p>
+                    <div>
+                        <button type="button" data-cdno = ${i} class="bh_edit_btn btn btn-primary ">수정하기</button>
+                        <button type="button" data-cdno = ${i} class="bh_del_btn btn btn-secondary">삭제하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+                    $('#behind_cards').append(temp_html); //behind_txt 뒤에 붙여주세요
+                });
+            }
+
+            // 지우려는 카드 인덱스 받아서 파이어베이스의 해당하는 문서 지우기. ref 통해.
+            async function delBehindCard(cd_idx) {
+                let b_docs = await getDocs(collection(db, "Behinds"));
+                let b_rows = b_docs.docs;
+
+                // 삭제하려는 문서의 위치(인덱스)가 올바른지 확인
+                if (cd_idx >= 0 && cd_idx < b_rows.length) {
+                    // 해당 인덱스의 문서 삭제 
+                    await deleteDoc(doc(db, "Behinds", b_rows[cd_idx].id));
+                    console.log("문서 삭제 성공!");
+                }
+            };
+
+            $('.bh_del_btn').click(async function(){
+                let cd_idx = $(this).data("cdno");
+                console.log("cdno:",cd_idx);
+                await delBehindCard(cd_idx);
+            });
+
+
+
+        </script>
+        <script id="ljw_script">
+            $('#behindtext').click(async function () {
+                let image = $('#image').val();
+                let title = $('#title').val();
+                let date = $('#date').val();
+                let comment = $('#comment').val();
 
                 let temp_html = ` <div class="col-md-6" id="developblog">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -470,178 +642,31 @@
                 </div>
             </div>`;
                 $('#behind_txt').append(temp_html); //behind_txt 뒤에 붙여주세요
+                alert('일지가 작성되었습니다!');
             });
-        }
-
-        // 개별 팀원 정보 가져오기 GET 방식
-        async function getTeammateById(mateId) {
-            let docs = await getDocs(collection(db, "Teammates"));
-
-            let row = docs.docs[mateId];
-
-            let mateData = {
-                age: row.get('age'),
-                blog: row.get('blog'),
-                comment: row.get('comment'),
-                costyle: row.get('costyle'),
-                good: row.get('good'),
-                img: row.get('img'),
-                mbti: row.get('mbti'),
-                name: row.get('name'),
-                residence: row.get('residence'),
-            };
-
-            return mateData;
-        }
-
-        //모달 내부 값 업데이트
-        async function updateModal(mateData) {
-            // 각 속성 값 
-            $('#md_view_age').text(mateData.age);
-            $('#md_view_blog').text(mateData.blog);
-            $('#md_view_comment').text(mateData.comment);
-            $('#md_view_costyle').text(mateData.costyle);
-            $('#md_view_good').text(mateData.good);
-            $('#md_view_img').attr('src', mateData.img);
-            $('#md_view_mbti').text(mateData.mbti);
-            $('#md_view_name').text(mateData.name);
-            $('#md_view_residence').text(mateData.residence);
-            $('#mateView #md_view_mbti').text(mateData.mbti);
-        };
-
-        // 팀원소개 > 보기 버튼 
-        // 클릭 시 모달 값 변경 
-        $('.viewmodal').click(async function () {
-            // Query에서는 데이터 속성 이름을 camelCase로 변환하므로, data('memNo')로 호출할 때는 N이 소문자로 변환되어야
-            let btnId = $(this).data('memno');
-            let mateData = await getTeammateById(btnId);
-
-            await updateModal(mateData);
-
-            $('#mateView').addClass('d-block');
-        });
+        </script>
+        <script id="ojy_script">
+            $('.btn-close').on('click', function () {
+                $('#mateView').removeClass('d-block');
+            });
 
 
-        //모달 내부 form 값 기존값으로 채우기
-        async function updateForm(mateData) {
-            // 각 속성 값   
-            $('#md_edit_age').val(mateData.age);
-            $('#md_edit_blog').val(mateData.blog);
-            $('#md_edit_comment').val(mateData.comment);
-            $('#md_edit_costyle').val(mateData.costyle);
-            $('#md_edit_good').val(mateData.good);
-            $('#md_edit_img').val(mateData.img);
-            $('#md_edit_mbti').val(mateData.mbti);
-            $('#md_edit_name').val(mateData.name);
-            $('#md_edit_residence').val(mateData.residence);
-        };
+            $('.btn-close,#modifyModalClose').on('click', function () {
+                $('#mateModify').removeClass('d-block');
+            });
+            //개발 후기 -> 수정하기 클릭 시 나오는 modal창 키고 끄기
+            $('#modifyBehind').on('click', function () {
+                $('#behindModify').addClass('d-block');
+            });
+            $('.btn-close').on('click', function () {
+                $('#behindModify').removeClass('d-block');
+            });
+            // 버튼을 1번 클릭하면 숨겨진 포스팅박스가 나오고 , 다시 클릭하면 숨겨짐
+            $('#writeReview').on('click', function () {
+                $('#postbox').toggleClass('none');
+            })
 
-
-        // 팀원소개 > 수정 버튼 
-        // 클릭 시 선택한 수정 버튼의 data-memNo 모달에 전달 id = "md_edit_memNo"
-        $('.modifymodal').click(async function () {
-            // Query에서는 데이터 속성 이름을 camelCase로 변환하므로, data('memNo')로 호출할 때는 N이 소문자로 변환되어야
-            let memNo = $(this).data('memno');
-            let mateData = await getTeammateById(memNo);
-
-            // attr : 특정 속성값을 , ~ 로 변경
-            $('#md_edit_memNo').attr('data-memno', memNo);
-
-            await updateForm(mateData);
-
-            $('#mateModify').addClass('d-block');
-
-        });
-
-        async function updateTeammate(idx) {
-            // Teammates 컬렉션의 문서를 가져온다. 
-            let docs = await getDocs(collection(db, "Teammates"));
-            // mateIdx에 해당하는 문서를 찾는다.
-            let mateDoc = docs.docs[idx];
-            // 모달 내부 form id 가져오기
-            let updateData = {
-                'age': $('#md_edit_age').val(),
-                'blog': $('#md_edit_blog').val(),
-                'comment': $('#md_edit_comment').val(),
-                'costyle': $('#md_edit_costyle').val(),
-                'good': $('#md_edit_good').val(),
-                'img': $('#md_edit_img').val(),
-                'mbti': $('#md_edit_mbti').val(),
-                'name': $('#md_edit_name').val(),
-                'residence': $('#md_edit_residence').val(),
-            };
-
-            await updateDoc(mateDoc.ref, updateData);
-            // 업데이트 후 페이지 리로드
-            window.location.reload();
-
-            // 수정 끝났으면 관리자 선택 초기화
-            mateIdx = null;
-        };
-
-
-
-        //팀원소개 -> 수정 > SaveChanges 버튼 누르면 Firebase 값 업데이트
-        $('#modifyModalSave').click(async function () {
-            let idx = $('#md_edit_memNo').data('memno')
-            await updateTeammate(idx);
-            alert('수정이 완료되었습니다.');
-            $('#mateModify').addClass('d-block');
-        });
-
-
-
-
-    </script>
-    <script id="ljw_script">
-        $('#behindtext').click(async function () {
-            let image = $('#image').val();
-            let title = $('#title').val();
-            let date = $('#date').val();
-            let comment = $('#comment').val();
-
-            let temp_html = ` <div class="col-md-6" id="developblog">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col-auto d-none d-lg-block">
-                        <img src = "${image}" width = "200" height = "250">
-                    </div>
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <h3 class="mb-0">${title}</h3>
-                        <div class="mb-1 text-body-secondary">${date}</div>
-                        <p class="card-text mb-auto">${comment}</p>
-                        <div>
-                            <button type="button" id = "modifyBehind" class="btn btn-primary ">수정하기</button>
-                            <button type="button" id = "deleteBehind" class="btn btn-secondary">삭제하기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-            $('#behind_txt').append(temp_html); //behind_txt 뒤에 붙여주세요
-            alert('일지가 작성되었습니다!');
-        });
-    </script>
-    <script id="ojy_script">
-        $('.btn-close').on('click', function () {
-            $('#mateView').removeClass('d-block');
-        });
-
-
-        $('.btn-close,#modifyModalClose').on('click', function () {
-            $('#mateModify').removeClass('d-block');
-        });
-        //개발 후기 -> 수정하기 클릭 시 나오는 modal창 키고 끄기
-        $('#modifyBehind').on('click', function () {
-            $('#behindModify').addClass('d-block');
-        });
-        $('.btn-close').on('click', function () {
-            $('#behindModify').removeClass('d-block');
-        });
-        // 버튼을 1번 클릭하면 숨겨진 포스팅박스가 나오고 , 다시 클릭하면 숨겨짐
-        $('#writeReview'). on ('click',function () {
-            $('#postbox').toggleClass('none');
-        })
-
-    </script>
+        </script>
 </body>
 
 </html>
